@@ -78,14 +78,12 @@ const putUser = async ( req, res = response ) => {
 const deleteUser = async ( req, res = response ) => {
 
     const { id } = req.params;
-
-    // Delete user from DB
-    //const user = await User.findByIdAndDelete( id );
-
+    
     // Change user status
     const user = await User.findByIdAndUpdate( id, { status: false } );
+    const authUser = req.user;
 
-    res.json( user );
+    res.json( { user, authUser } );
 
 };
 
