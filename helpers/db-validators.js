@@ -1,5 +1,5 @@
-const Role = require('../models/role');
-const User = require('../models/user');
+const { Collection } = require('mongoose');
+const { Category, Product, Role, Server, User } = require('../models');
 
 const isValidRole = async ( role = '' ) => {
 
@@ -35,8 +35,65 @@ const userIdExist = async ( id ) => {
 
 };
 
+const categoryIdExist = async ( id ) => {
+
+    const idCatExist = await Category.findById( id );
+
+    if( ! idCatExist ) {
+
+        throw new Error( `ID ${ id } is not registered on DB` );
+
+    }
+
+};
+
+const categoryNameExist = async ( name ) => {
+
+    name = name.toUpperCase();
+
+    const catNameExist = await Category.findOne( { name } );
+
+    if( catNameExist ) {
+
+        throw new Error( `Name ${ name } already exist on DB` );
+
+    }
+
+};
+
+const productIdExist = async ( id ) => {
+
+    const idProdExist = await Product.findById( id );
+
+    if( ! idProdExist ) {
+
+        throw new Error( `ID ${ id } is not registered on DB` );
+
+    }
+
+};
+
+const allowedCollections = ( collection = '', colletions = [] ) => {
+
+    const included = colletions.includes( collection );
+
+    if( ! included ) {
+
+        throw new Error( `Collection ${ collection } is not allowed, allowed collections ${ collections }` );
+
+    }
+    
+    return true;
+
+};
+
+
 module.exports = {
-    isValidRole,
+    allowedCollections,
+    categoryIdExist,
+    categoryNameExist,
     emailExist,
+    isValidRole,
+    productIdExist,
     userIdExist
 };

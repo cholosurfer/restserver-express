@@ -12,7 +12,7 @@ const isAdminRole = ( req, res = response, next ) => {
 
     if( role !== 'ADMIN_ROLE' ) {
         return res.status(401).json({
-            msg: `${name} is not Administrator - can't perform this action`
+            msg: `${ name } is not Administrator - can't perform this action`
         });
     }
 
