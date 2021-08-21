@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+
 const { dbConnection } = require('../db/config');
+const { auth } = require('google-auth-library');
 
 class Server {
 
@@ -26,6 +28,12 @@ class Server {
     routes() {
 
         this.app.use( '/api/auth', require('../routes/auth') );
+
+        this.app.use( '/api/category', require('../routes/category') );
+
+        this.app.use( '/api/product', require('../routes/product') );
+
+        this.app.use( '/api/search', require('../routes/search') );
 
         this.app.use( '/api/user', require('../routes/user') );
 
